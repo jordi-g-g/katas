@@ -1,4 +1,4 @@
-package com.codurance.kata.application;
+package com.codurance.kata.sudoku;
 
 import java.util.ArrayList;
 import java.util.List;

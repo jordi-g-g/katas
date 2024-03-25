@@ -1,8 +1,8 @@
-package com.codurance.kata.application;
+package com.codurance.kata.sudoku;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ApplicationTest {
     @Test
