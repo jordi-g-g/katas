@@ -1,4 +1,4 @@
-package com.codurance.kata.application;
+package com.codurance.kata.sudoku;
 
 public class Application {
     public String execute(int[][] input) {

@@ -1,4 +1,4 @@
-package com.codurance.kata.application;
+package com.codurance.kata.sudoku;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
