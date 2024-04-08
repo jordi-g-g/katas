@@ -20,6 +20,14 @@ public class GameTest {
     }
 
     @Test
+    public void a_game_has_nine_fields_in_a_3x3_grid() {
+        assertEquals(3, game.getBoard().length);
+        for (int row = 0; row < 3; row++) {
+            assertEquals(3, game.getBoard()[row].length);
+        }
+    }
+
+    @Test
     public void there_are_two_player_in_the_game() {
         assertEquals(2, game.numberOfPlayers());
     }
