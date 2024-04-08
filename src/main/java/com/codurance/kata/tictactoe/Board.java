@@ -15,4 +15,8 @@ public class Board {
     public char[][] getData() {
         return data;
     }
+
+    public void setData(int x, int y, char value) {
+        data[x][y] = value;
+    }
 }
