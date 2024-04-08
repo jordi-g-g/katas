@@ -32,7 +32,7 @@ public class GameTest {
     @Test
     public void player_O_plays_after_player_X() {
         assertEquals('X', game.getCurrentPlayer());
-        game.switchPlayer();
+        game.takeField(0, 0);
         assertEquals('O', game.getCurrentPlayer());
     }
 
@@ -44,6 +44,19 @@ public class GameTest {
         boolean firstAttempt = game.takeField(x, y);
         assertTrue(firstAttempt);
         assertEquals(initialPlayer, game.getBoardField(x, y));
+    }
+
+    @Test
+    public void a_game_is_over_when_all_fields_in_a_column_are_taken_by_a_player() {
+        game.takeField(0, 0);
+        game.takeField(1, 1);
+        game.takeField(0, 1);
+        game.takeField(2, 0);
+        game.takeField(0, 2);
+
+        game.printBoard();
+
+        assertEquals(true, game.isGameOver());
     }
 
     @Test
