@@ -142,4 +142,21 @@ public class GameTest {
         Game game = new Game();
         assertThrows(IndexOutOfBoundsException.class, () -> game.takeField(cell));
     }
+
+    @Test
+    public void a_game_is_over_when_all_fields_are_taken() {
+        game.takeField(1);
+        game.takeField(5);
+        game.takeField(2);
+        game.takeField(3);
+        game.takeField(7);
+        game.takeField(4);
+        game.takeField(6);
+        game.takeField(9);
+        game.takeField(8);
+
+        System.out.print(game.drawBoard());
+
+        assertTrue(game.isGameOver());
+    }
 }

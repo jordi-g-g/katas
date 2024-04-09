@@ -73,7 +73,8 @@ public class Game {
     private boolean checkGameOver(char currentPlayer) {
         return checkIfAllColumnsAreTakenBySamePlayer(currentPlayer) ||
                 checkIfAllRowsAreTakenBySamePlayer(currentPlayer) ||
-                checkIfAllInDiagonalAreTakenBySamePlayer(currentPlayer);
+                checkIfAllInDiagonalAreTakenBySamePlayer(currentPlayer) ||
+                checkIfAllFieldsAreTaken();
     }
 
     private Boolean checkIfAllColumnsAreTakenBySamePlayer(Character player) {
@@ -115,6 +116,16 @@ public class Game {
             return true;
         }
         return board[2] == currentPlayer && board[4] == currentPlayer && board[6] == currentPlayer;
+    }
+
+    private boolean checkIfAllFieldsAreTaken() {
+        for (int cell = 0; cell < BOARD_SIZE; cell++) {
+            if (board[cell] >= '1' && board[cell] <= '9') {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void initializeBoard() {
