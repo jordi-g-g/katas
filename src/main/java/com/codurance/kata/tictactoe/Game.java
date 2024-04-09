@@ -42,8 +42,12 @@ public class Game {
 
         cell -= 1;
         if (fieldCanBeTaken(cell)) {
-            board[cell] = getCurrentPlayer();
-            if (checkIfAllColumnsAreTakenBySamePlayer()) {
+            char currentPlayer = getCurrentPlayer();
+            board[cell] = currentPlayer;
+            if (checkIfAllColumnsAreTakenBySamePlayer(currentPlayer)) {
+                gameIsOver = true;
+            }
+            if (checkIfAllRowsAreTakenBySamePlayer(currentPlayer)) {
                 gameIsOver = true;
             }
             switchPlayer();
@@ -71,10 +75,10 @@ public class Game {
         return board[cell] >= '1' && board[cell] <= '9';
     }
 
-    private Boolean checkIfAllColumnsAreTakenBySamePlayer() {
+    private Boolean checkIfAllColumnsAreTakenBySamePlayer(Character player) {
         int countColumnsTakenByPlayer = 0;
         for (int cell = 0; cell < BOARD_SIZE; cell++) {
-            if (board[cell] == 'X') {
+            if (board[cell] == player) {
                 countColumnsTakenByPlayer++;
             }
             if (countColumnsTakenByPlayer == BOARD_MODULE) {
@@ -83,6 +87,23 @@ public class Game {
             if (cell % BOARD_MODULE == 2) {
                 countColumnsTakenByPlayer = 0;
             }
+        }
+
+        return false;
+    }
+
+    private Boolean checkIfAllRowsAreTakenBySamePlayer(Character player) {
+        int countRowsTakenByPlayer = 0;
+        for (int start = 0; start < BOARD_MODULE; start++) {
+            for (int cellIndex = start; cellIndex < BOARD_SIZE; cellIndex += BOARD_MODULE) {
+                if (board[cellIndex] == player) {
+                    countRowsTakenByPlayer++;
+                }
+                if (countRowsTakenByPlayer == BOARD_MODULE) {
+                    return true;
+                }
+            }
+            countRowsTakenByPlayer = 0;
         }
 
         return false;
