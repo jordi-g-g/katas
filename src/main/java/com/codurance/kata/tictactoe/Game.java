@@ -33,25 +33,35 @@ public class Game {
             throw new IndexOutOfBoundsException();
         }
 
-        if (board[x][y] == ' ') {
+        if (fieldCanBeTaken(x, y)) {
             board[x][y] = getCurrentPlayer();
-            switchPlayer();
             if (checkIfAllFieldsInAColumnAreTakenBySamePlayer()) {
                 gameIsOver = true;
             }
+            switchPlayer();
             return true;
         }
         return false;
     }
 
+    private boolean fieldCanBeTaken(int x, int y) {
+        return board[x][y] == ' ';
+    }
+
     private Boolean checkIfAllFieldsInAColumnAreTakenBySamePlayer() {
-        for (int col = 0; col < board[0].length; col++) {
-            if (board[0][col] != 'X') {
-                return false;
+        int countFieldsTakenByCurrentPlayer = 0;
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (board[row][col] == 'X') {
+                    countFieldsTakenByCurrentPlayer += 1;
+                    if (countFieldsTakenByCurrentPlayer == 3) {
+                        return true;
+                    }
+                }
             }
         }
 
-        return true;
+        return false;
     }
 
     public Boolean isGameOver() {
