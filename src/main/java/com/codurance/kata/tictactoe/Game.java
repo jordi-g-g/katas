@@ -3,7 +3,9 @@ package com.codurance.kata.tictactoe;
 import java.util.List;
 
 public class Game {
-    private char[][] board;
+    private static int BOARD_SIZE = 9;
+    private static int BOARD_MODULE = 3;
+    private char[] board;
     private final List<Character> players = List.of('X', 'O');
     private int currentPlayerIndex = 0;
     private Boolean gameIsOver = false;
@@ -12,12 +14,19 @@ public class Game {
         initializeBoard();
     }
 
-    public char[][] getBoard() {
-        return board;
-    }
+    public String drawBoard() {
+        StringBuilder output = new StringBuilder("+---+---+---+\n");
+        for (int cell = 0; cell < BOARD_SIZE; cell++) {
+            if (cell % BOARD_MODULE == 0 && cell < BOARD_SIZE) {
+                output.append("|");
+            }
+            output.append(" ").append(board[cell]).append(" |");
+            if (cell % BOARD_MODULE == 2) {
+                output.append("\n+---+---+---+\n");
+            }
+        }
 
-    public Character getBoardField(int x, int y) {
-        return board[x][y];
+        return output.toString();
     }
 
     public int numberOfPlayers() {
@@ -28,68 +37,65 @@ public class Game {
         return players.get(currentPlayerIndex);
     }
 
-    public void takeField(int x, int y) {
-        if (x < 0 || x > board.length || y < 0 || y > board.length) {
-            throw new IndexOutOfBoundsException();
-        }
+    public void takeField(int cell) {
+        validateBoardBounds(cell);
 
-        if (fieldCanBeTaken(x, y)) {
-            board[x][y] = getCurrentPlayer();
-            if (checkIfAllFieldsInAColumnAreTakenBySamePlayer()) {
+        cell -= 1;
+        if (fieldCanBeTaken(cell)) {
+            board[cell] = getCurrentPlayer();
+            if (checkIfAllColumnsAreTakenBySamePlayer()) {
                 gameIsOver = true;
             }
             switchPlayer();
         }
     }
 
-    private boolean fieldCanBeTaken(int x, int y) {
-        return board[x][y] == ' ';
+    public Character getBoardField(int cell) {
+        validateBoardBounds(cell);
+
+        cell -= 1;
+        return board[cell];
     }
 
-    private Boolean checkIfAllFieldsInAColumnAreTakenBySamePlayer() {
-        int countFieldsTakenByCurrentPlayer = 0;
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                if (board[row][col] == 'X') {
-                    countFieldsTakenByCurrentPlayer += 1;
-                    if (countFieldsTakenByCurrentPlayer == 3) {
-                        return true;
-                    }
-                }
-            }
+    private static void validateBoardBounds(int cell) {
+        if (cell <= 0 || cell > BOARD_SIZE) {
+            throw new IndexOutOfBoundsException();
         }
-
-        return false;
     }
 
     public Boolean isGameOver() {
         return gameIsOver;
     }
 
-    private void initializeBoard() {
-        board = new char[3][3];
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                board[row][col] = ' ';
+    private boolean fieldCanBeTaken(int cell) {
+        return board[cell] >= '1' && board[cell] <= '9';
+    }
+
+    private Boolean checkIfAllColumnsAreTakenBySamePlayer() {
+        int countColumnsTakenByPlayer = 0;
+        for (int cell = 0; cell < BOARD_SIZE; cell++) {
+            if (board[cell] == 'X') {
+                countColumnsTakenByPlayer++;
             }
+            if (countColumnsTakenByPlayer == BOARD_MODULE) {
+                return true;
+            }
+            if (cell % BOARD_MODULE == 2) {
+                countColumnsTakenByPlayer = 0;
+            }
+        }
+
+        return false;
+    }
+
+    private void initializeBoard() {
+        board = new char[BOARD_SIZE];
+        for (int cell = 0; cell < BOARD_SIZE; cell++) {
+            board[cell] = (char) ('1' + cell);
         }
     }
 
     private void switchPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-    }
-
-    public void printBoard() {
-        System.out.println("+---+---+---+");
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                if (col == 0) {
-                    System.out.print("|");
-                }
-                System.out.print(" " + board[row][col] + " |");
-            }
-            System.out.println();
-            System.out.println("+---+---+---+");
-        }
     }
 }
