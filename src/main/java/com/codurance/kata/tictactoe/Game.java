@@ -28,7 +28,7 @@ public class Game {
         return players.get(currentPlayerIndex);
     }
 
-    public boolean takeField(int x, int y) {
+    public void takeField(int x, int y) {
         if (x < 0 || x > board.length || y < 0 || y > board.length) {
             throw new IndexOutOfBoundsException();
         }
@@ -39,9 +39,7 @@ public class Game {
                 gameIsOver = true;
             }
             switchPlayer();
-            return true;
         }
-        return false;
     }
 
     private boolean fieldCanBeTaken(int x, int y) {

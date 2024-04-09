@@ -5,10 +5,8 @@ import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
 
@@ -49,9 +47,13 @@ public class GameTest {
         int x = 0;
         int y = 0;
         char initialPlayer = game.getCurrentPlayer();
-        boolean firstAttempt = game.takeField(x, y);
-        assertTrue(firstAttempt);
+        game.takeField(x, y);
         assertEquals(initialPlayer, game.getBoardField(x, y));
+    }
+
+    @Test
+    public void a_game_is_not_over_by_default() {
+        assertFalse(game.isGameOver());
     }
 
     @Test
@@ -64,18 +66,18 @@ public class GameTest {
 
         game.printBoard();
 
-        assertEquals(true, game.isGameOver());
+        assertTrue(game.isGameOver());
     }
 
     @Test
     public void a_player_cannot_take_an_already_taken_field() {
         int x = 0;
         int y = 0;
-        boolean firstAttempt = game.takeField(x, y);
-        assertTrue(firstAttempt);
+        char initialPlayer = game.getCurrentPlayer();
+        game.takeField(x, y);
 
-        boolean secondAttempt = game.takeField(x, y);
-        assertFalse(secondAttempt);
+        game.takeField(x, y);
+        assertEquals(initialPlayer, game.getBoardField(x, y));
     }
 
     @ParameterizedTest
