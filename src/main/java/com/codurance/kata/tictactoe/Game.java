@@ -44,12 +44,7 @@ public class Game {
         if (fieldCanBeTaken(cell)) {
             char currentPlayer = getCurrentPlayer();
             board[cell] = currentPlayer;
-            if (checkIfAllColumnsAreTakenBySamePlayer(currentPlayer)) {
-                gameIsOver = true;
-            }
-            if (checkIfAllRowsAreTakenBySamePlayer(currentPlayer)) {
-                gameIsOver = true;
-            }
+            gameIsOver = checkGameOver(currentPlayer);
             switchPlayer();
         }
     }
@@ -73,6 +68,12 @@ public class Game {
 
     private boolean fieldCanBeTaken(int cell) {
         return board[cell] >= '1' && board[cell] <= '9';
+    }
+
+    private boolean checkGameOver(char currentPlayer) {
+        return checkIfAllColumnsAreTakenBySamePlayer(currentPlayer) ||
+                checkIfAllRowsAreTakenBySamePlayer(currentPlayer) ||
+                checkIfAllInDiagonalAreTakenBySamePlayer(currentPlayer);
     }
 
     private Boolean checkIfAllColumnsAreTakenBySamePlayer(Character player) {
@@ -107,6 +108,13 @@ public class Game {
         }
 
         return false;
+    }
+
+    private boolean checkIfAllInDiagonalAreTakenBySamePlayer(char currentPlayer) {
+        if (board[0] == currentPlayer && board[4] == currentPlayer && board[8] == currentPlayer) {
+            return true;
+        }
+        return board[2] == currentPlayer && board[4] == currentPlayer && board[6] == currentPlayer;
     }
 
     private void initializeBoard() {

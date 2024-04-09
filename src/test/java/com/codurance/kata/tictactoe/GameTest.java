@@ -106,6 +106,26 @@ public class GameTest {
         assertTrue(game.isGameOver());
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "1, 2, 5, 7, 9",
+            "3, 2, 5, 6, 7",
+    })
+    public void a_game_is_over_when_all_fields_in_a_diagonal_are_taken_by_a_player(
+            int take1, int take2, int take3, int take4, int take5
+    ) {
+        Game game = new Game();
+        game.takeField(take1);
+        game.takeField(take2);
+        game.takeField(take3);
+        game.takeField(take4);
+        game.takeField(take5);
+
+        System.out.print(game.drawBoard());
+
+        assertTrue(game.isGameOver());
+    }
+
     @Test
     public void a_player_cannot_take_an_already_taken_field() {
         int cell = 2;
