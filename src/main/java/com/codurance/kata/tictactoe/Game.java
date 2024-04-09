@@ -80,14 +80,16 @@ public class Game {
     }
 
     public void printBoard() {
+        System.out.println("+---+---+---+");
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 if (col == 0) {
                     System.out.print("|");
                 }
-                System.out.print(board[row][col] + "|");
+                System.out.print(" " + board[row][col] + " |");
             }
             System.out.println();
+            System.out.println("+---+---+---+");
         }
     }
 }
