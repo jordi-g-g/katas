@@ -85,17 +85,16 @@ public class GameTest {
         assertTrue(game.isGameOver());
     }
 
-    //    @Test
-//    public void a_player_cannot_take_an_already_taken_field() {
-//        int x = 0;
-//        int y = 0;
-//        char initialPlayer = game.getCurrentPlayer();
-//        game.takeField(x, y);
-//
-//        game.takeField(x, y);
-//        assertEquals(initialPlayer, game.getBoardField(x, y));
-//    }
-//
+    @Test
+    public void a_player_cannot_take_an_already_taken_field() {
+        int cell = 2;
+        char initialPlayer = game.getCurrentPlayer();
+        game.takeField(cell);
+
+        game.takeField(cell);
+        assertEquals(initialPlayer, game.getBoardField(cell));
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {-3, 0, 15, Integer.MAX_VALUE})
     public void an_exception_IndexOutOfBoundsException_should_be_thrown_when_out_of_bounds_position_is_intended_to_be_taken(int cell) {
