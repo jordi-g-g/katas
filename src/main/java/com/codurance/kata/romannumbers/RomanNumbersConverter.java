@@ -19,6 +19,11 @@ public class RomanNumbersConverter {
         StringBuilder output = new StringBuilder();
 
         for (Map.Entry<Integer, String> entry : romanMapping.entrySet()) {
+            if (i == entry.getKey() - 1) {
+                output.append("I");
+                output.append(entry.getValue());
+                i = (i - entry.getKey());
+            }
             if (i >= entry.getKey()) {
                 output.append(entry.getValue());
                 i = (i - entry.getKey());
