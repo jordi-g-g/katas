@@ -2,6 +2,8 @@ package com.codurance.kata.tictactoe;
 
 import java.util.List;
 
+// SRP broken
+// SOLID in order to improve this implementation
 public class Game {
     private static int BOARD_SIZE = 9;
     private static int BOARD_MODULE = 3;
@@ -14,6 +16,7 @@ public class Game {
         initializeBoard();
     }
 
+    // 1- Draw
     public String drawBoard() {
         StringBuilder output = new StringBuilder("+---+---+---+\n");
         for (int cell = 0; cell < BOARD_SIZE; cell++) {
@@ -37,6 +40,7 @@ public class Game {
         return players.get(currentPlayerIndex);
     }
 
+    // 2 - Move
     public void takeField(int cell) {
         validateBoardBounds(cell);
 
@@ -70,6 +74,7 @@ public class Game {
         return board[cell] >= '1' && board[cell] <= '9';
     }
 
+    // 3 - Apply Game business ruel
     private boolean checkGameOver(char currentPlayer) {
         return checkIfAllColumnsAreTakenBySamePlayer(currentPlayer) ||
                 checkIfAllRowsAreTakenBySamePlayer(currentPlayer) ||
@@ -128,6 +133,9 @@ public class Game {
         return true;
     }
 
+    // 4 - Board Creation
+    // Smells: Magic constants ''
+    // Smells: Primitive Obsession
     private void initializeBoard() {
         board = new char[BOARD_SIZE];
         for (int cell = 0; cell < BOARD_SIZE; cell++) {
